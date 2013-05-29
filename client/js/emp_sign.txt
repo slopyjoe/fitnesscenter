@@ -1,0 +1,3 @@
+$("document").keypress(function(){
+alert("KeyPressed");
+});
