@@ -1,0 +1,25 @@
+Person
+	Name
+	Email
+	DOB
+	
+Client
+	Company
+	CompanyID
+	DateCreated
+	LastSignon
+	Person
+	
+Employee
+	Role
+	Person
+	
+Activity
+	Name
+	Description
+	Difficulty
+	Rating
+	
+Schedule
+	Activity
+	Time

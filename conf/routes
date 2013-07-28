@@ -1,0 +1,54 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#Clients
+GET		/client						controllers.Clients.index()
+GET     /client/list                controllers.Clients.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+# Add client
+GET     /client/new              	controllers.Clients.create()
+POST    /client						controllers.Clients.save()
+
+# Edit existing client
+GET     /client/:id              	controllers.Clients.edit(id:Long)
+POST    /client/:id              	controllers.Clients.update(id:Long)
+
+# Delete a client
+POST    /client/:id/delete       	controllers.Clients.delete(id:Long)
+
+
+
+#Employees
+GET		/employee					controllers.Employees.index()
+GET     /employee/list              controllers.Employees.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+# Add client
+GET     /employee/new              	controllers.Employees.create()
+POST    /employee					controllers.Employees.save()
+
+# Edit existing client
+GET     /employee/:id              	controllers.Employees.edit(id:Long)
+POST    /employee/:id              	controllers.Employees.update(id:Long)
+
+# Delete a client
+POST    /employee/:id/delete       	controllers.Employees.delete(id:Long)
+
+
+#Activities
+GET		/activity					controllers.Activities.index()
+GET     /activity/list              controllers.Activities.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+# Add activity
+GET     /activity/new              	controllers.Activities.create()
+POST    /activity					controllers.Activities.save()
+
+# Edit existing activity
+GET     /activity/:id              	controllers.Activities.edit(id:Long)
+POST    /activity/:id              	controllers.Activities.update(id:Long)
+
+# Delete a activity
+POST    /activity/:id/delete       	controllers.Activities.delete(id:Long)

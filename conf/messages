@@ -1,0 +1,5 @@
+# Messages
+
+clients.list.title={0,choice,0#No clients|1#One client|1<{0,number,integer} clients} found
+
+
