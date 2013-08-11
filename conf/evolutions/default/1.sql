@@ -61,8 +61,18 @@ drop table if exists client;
 
 drop table if exists employee;
 
+drop table if exists activity;
+ 
+drop table if exists client_count;
+
+drop table if exists person;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists client_seq;
 
 drop sequence if exists employee_seq;
+
+drop sequence if exists person_seq;
+
+drop sequence if exists activity_seq;

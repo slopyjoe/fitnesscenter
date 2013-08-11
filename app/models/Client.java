@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -25,9 +26,14 @@ public class Client extends Model{
 	@Constraints.Required
 	public String organization;
 	
+	@OneToOne
 	public Person person;
 	
 	public static Finder<Long, Client> find = new Finder<Long, Client>(Long.class, Client.class);
+	
+	public static Client findClient(String empId){
+		return find.where().eq("empId", empId).findUnique();
+	}
 	
 	
 	/**

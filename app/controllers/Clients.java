@@ -46,6 +46,17 @@ public class Clients extends Controller{
      * @param id Id of the computer to edit
      */
     public static Result edit(Long id) {
+    	Client cl = Client.find.byId(id);
+    	if(cl == null)
+    	{
+    		System.out.println("Null client");
+    		
+    	}else if(cl.organization.equals("")){
+    		System.out.println("empty name");
+    	}else
+    	{
+    		System.out.println(cl.organization );
+    	}
         Form<Client> computerForm = form(Client.class).fill(
             Client.find.byId(id)
         );
@@ -70,7 +81,7 @@ public class Clients extends Controller{
     }
     
     /**
-     * Display the 'new computer form'.
+     * Display the 'new client form'.
      */
     public static Result create() {
         Form<Client> clientForm = form(Client.class);

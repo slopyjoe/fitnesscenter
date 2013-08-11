@@ -23,3 +23,9 @@ Activity
 Schedule
 	Activity
 	Time
+	
+Count
+	Id
+	Client_id
+	Date
+	Count

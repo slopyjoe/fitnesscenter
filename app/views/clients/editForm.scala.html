@@ -12,10 +12,11 @@
         
         <fieldset>
         
-            @inputText(clientForm("name"), '_label -> "Full name")
             @inputText(clientForm("organization"), '_label -> "Affiliation")
             @inputText(clientForm("empId"), '_label -> "Id")
-            @inputText(clientForm("email"), '_label -> "Email")
+            @inputText(clientForm("person.name"), '_label -> "Full name")
+            
+            @inputText(clientForm("person.email"), '_label -> "Email")
 
                     
         </fieldset>

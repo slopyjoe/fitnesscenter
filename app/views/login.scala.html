@@ -1,0 +1,25 @@
+@(form: Form[Application.Login])
+
+@main{
+
+@helper.form(routes.Application.authenticate()) {
+        
+        <fieldset>
+        
+            @helper.inputText(form("employeeId"), '_label -> "Employee ID")
+
+        </fieldset>
+        
+        
+        <div class="actions">
+            <input type="submit" value="Sign In" class="btn primary"> 
+        </div>
+        
+         @if(flash.containsKey("success")) {
+        <div class="alert-message warning">
+            <strong>Done!</strong> @flash.get("success")
+        </div>
+    } 
+        
+    }
+}
