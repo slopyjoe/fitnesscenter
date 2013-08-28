@@ -1,41 +1,33 @@
 package controllers;
 
-import static play.data.Form.form;
-import models.Client;
-import play.data.Form;
+import java.util.List;
+import java.util.Map;
+
+import models.Activity;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
-import views.html.login;
+
 public class Application extends Controller {
-	
-	public static class Login {
-		public String employeeId;
-	}
   
+	public static class Login{
+		public String employee_id;
+	}
+	
+	
     public static Result index() {
-    	return ok(login.render(form(Login.class)));
+    	List<Activity> activities = Activity.find.all();
+        return ok(index.render(scala.collection.JavaConversions.asScalaBuffer(activities)));
     }
   
     public static Result login(){
-    	return ok(login.render(form(Login.class)));
+    	Map<String, String[]> queryString = request().queryString();
+    	if(queryString.get("employee_id") != null)
+    	{
+    		flash("success", "Apples");
+    	}
+    	
+    	return redirect(routes.Application.index());
     }
     
-    public static Result authenticate(){
-    	Form<Login> loginForm = form(Login.class).bindFromRequest();
-        if(loginForm.hasErrors()) {
-            return badRequest(login.render(loginForm));
-        } else {
-            session("employeeId", loginForm.get().employeeId);
-            Client client = Client.findClient(loginForm.get().employeeId);
-            if(client.id >= 0 )
-            {
-            	flash("success", "Welcome " + client.person.name + " from " + client.organization);
-            	return redirect(routes.Applicationd.index());
-            }
-            return redirect(
-                routes.Application.index()
-            );
-        }
-    }
 }

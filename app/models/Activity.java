@@ -1,13 +1,15 @@
 package models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-
-import com.avaje.ebean.Page;
-import play.data.validation.Constraints;
 
 @Entity
 public class Activity extends Model{
@@ -15,60 +17,30 @@ public class Activity extends Model{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4946634082511994210L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	public Long id;
-
-	@Constraints.Required
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long internal_id;
+	
+	@MaxLength(240)
+	@Required
+	private String description;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@Required
+	public User instructor;
+	
+	@Required
 	public String name;
-
-	@Constraints.Required
-	public String description;
-
-	@ManyToOne
-	public Employee employee;
-
-
-	public Activity(){}
 	
-	public Activity(String name, String description, Employee employee)
-	{
-		this.name = name; 
+	public static Finder<Long, Activity> find = new Finder<>(Long.class, Activity.class);
+	
+	public String getDescription(){
+		return description;
+	}
+	public void setDescription(String description){
 		this.description = description;
-		this.employee = employee;
 	}
 	
-	public static Finder<Long, Activity> find = new Finder<Long, Activity>(
-			Long.class, Activity.class);
-
-	/**
-	 * Return a page of computer
-	 * 
-	 * @param page
-	 *            Page to display
-	 * @param pageSize
-	 *            Number of computers per page
-	 * @param sortBy
-	 *            Computer property used for sorting
-	 * @param order
-	 *            Sort order (either or asc or desc)
-	 * @param filter
-	 *            Filter applied on the name column
-	 */
-	public static Page<Activity> page(int page, int pageSize, String sortBy,
-			String order, String filter) {
-		return find.where().ilike("name", "%" + filter + "%")
-				.orderBy(sortBy + " " + order).fetch("employee").findPagingList(pageSize)
-				.getPage(page);
-	}
-
-	public static void main(String args[]) {
-		String temp = "insert into activity (id, name, description, employee_id)"
-				+ " values (%d,\'Name%d\',\'This is a class on apples.\',%d);";
-
-		for (int i = 0; i < 51; i++) {
-			System.out.println(String.format(temp, i, i, i));
-		}
-	}
 }

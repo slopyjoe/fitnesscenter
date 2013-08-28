@@ -1,7 +1,16 @@
-@(message: String)
+@(activities: Seq[Activity])
+
+@import helper._
 
 @main{
-<h1>
-	@message
-</h1>
+	
+
+	@if(flash.contains("success")) {
+                <p class="success">
+                    wooo
+                </p>
+            }
+	
+	
+	@activityContainer(activities)
 }
