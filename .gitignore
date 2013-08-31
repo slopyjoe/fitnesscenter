@@ -14,3 +14,8 @@ dist
 /RUNNING_PID
 /.settings
 /.target
+bin/
+
+.target/views/main.scala.html
+
+.target/views/main.scala.html
