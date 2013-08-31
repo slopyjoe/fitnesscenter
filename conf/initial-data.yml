@@ -1,0 +1,116 @@
+
+# Users
+
+users:
+
+    - !!models.User
+        email: guillaume@sample.com
+        firstName: Guillaume 
+        lastName: Bort
+        employee_id: 123451
+        dob: 1987-4-15
+        lastLoggedIn: 2013-8-26		
+        createdOn: 2012-4-11
+        active: true
+        
+    - !!models.User
+        email: frank@sample.com
+        firstName: Frank 
+        lastName: Bob
+        employee_id: 123452
+        dob: 1987-4-15
+        lastLoggedIn: 2013-8-26		
+        createdOn: 2005-4-11
+        active: false
+        
+    - !!models.User
+        email: steve@sample.com
+        firstName: Steve
+        lastName: Born
+        employee_id: 123453
+        dob: 1987-4-15
+        lastLoggedIn: 2013-8-10		
+        createdOn: 2012-4-11
+        active: true
+        
+    - !!models.User
+        email: jane@sample.com
+        firstName: Jane
+        lastName: Doe
+        employee_id: 123454
+        dob: 1987-4-15
+        lastLoggedIn: 2013-7-26		
+        createdOn: 2012-4-11
+        active: true
+        
+        
+    - !!models.User
+        email: sam@sample.com
+        firstName: Sammy
+        lastName: Born
+        employee_id: 123455
+        dob: 1987-4-15
+        lastLoggedIn: 2012-8-26		
+        createdOn: 2012-4-11
+        active: true
+        
+    - !!models.User
+        email: scooby@sample.com
+        firstName: Scooby
+        lastName: Doo
+        employee_id: 123456
+        dob: 1987-4-15
+        lastLoggedIn: 2013-8-26		
+        createdOn: 2012-4-11
+        active: false
+        
+# Activities
+
+#activities:
+
+#    -!!models.Activity
+#        internal_id: 1
+#        description: "General Fitness center, weights and cardio".
+#        name: Exercise Room
+#        hasSchedule: false
+#        instructor:
+#            -!!models.User
+#                email: jane@sample.com
+     
+#    -!!models.Activity
+#        internal_id: 2
+#        description: "Stretching and core building."
+#        name: Yoga
+#        hasSchedule: true
+#        instructor:
+#            -!!models.User
+#                email: scooby@sample.com
+
+#    -!!models.Activity
+#        internal_id: 3
+#        description: "Changing room, lockers, restrooms, and showers."
+#        name: Locker Room
+#        hasSchedule: false
+#        instructor:
+#            -!!models.User
+#                email: jane@sample.com
+
+#    -!!models.Activity
+#        internal_id: 4
+#        description: "Court for basketball and raquet ball."
+#        name: Basketball/Raquet ball
+#        hasSchedule: false
+#        instructor:
+#            -!!models.User
+#                email: jane@sample.com
+
+#    -!!models.Activity
+#        internal_id: 5
+#        description: "Punching and kicking."
+#        name: Exercise Room
+#        hasSchedule: true
+#        instructor:
+#            -!!models.User
+#                email: sam@sample.com
+         
+          

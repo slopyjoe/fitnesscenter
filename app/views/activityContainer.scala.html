@@ -1,0 +1,18 @@
+@(activities:Seq[Activity])
+
+	<div class="accordion" id="activities-accordion">
+	@activities.map { activity =>
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse"
+							data-parent="#activities-accordion" href="#@activity.getInternal_id()">
+							@activity.getName()</a>
+					</div>
+					<div id="@activity.getInternal_id()" class="accordion-body collapse">
+						<div class="accordion-inner">@activity.getDescription()</div>
+					</div>
+				</div>
+	}
+	</div>
+	
+

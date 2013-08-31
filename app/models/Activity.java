@@ -21,7 +21,7 @@ public class Activity extends Model{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long internal_id;
+	private Long internal_id;
 	
 	@MaxLength(240)
 	@Required
@@ -29,12 +29,14 @@ public class Activity extends Model{
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
-	public User instructor;
+	private User instructor;
+	
+	private boolean hasSchedule;
 	
 	@Required
-	public String name;
+	private String name;
 	
-	public static Finder<Long, Activity> find = new Finder<>(Long.class, Activity.class);
+	public static Finder<Long, Activity> find = new Finder<Long, Activity>(Long.class, Activity.class);
 	
 	public String getDescription(){
 		return description;
@@ -42,5 +44,31 @@ public class Activity extends Model{
 	public void setDescription(String description){
 		this.description = description;
 	}
+	public Long getInternal_id() {
+		return internal_id;
+	}
+	public void setInternal_id(Long internal_id) {
+		this.internal_id = internal_id;
+	}
+	public User getInstructor() {
+		return instructor;
+	}
+	public void setInstructor(User instructor) {
+		this.instructor = instructor;
+	}
+	public boolean isHasSchedule() {
+		return hasSchedule;
+	}
+	public void setHasSchedule(boolean hasSchedule) {
+		this.hasSchedule = hasSchedule;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 	
 }

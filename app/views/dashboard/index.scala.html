@@ -1,0 +1,38 @@
+@(activities: Seq[Activity] ,user: User, posts: Seq[BulletinPost], available: Seq[Activity])
+@import helper._;
+
+@main{
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span10">
+			<h1>Welcom To the Fitness Center</h1>
+			<div class="row" style="height:80%">
+				<div id="login" class="span4 offset5">
+				  @if(user != null) {
+                	@report(user.getFirstName(), available)
+            	  }
+			 		@form(action=routes.Dashboard.enter) {
+			 			<fieldset>
+			 				<legend>Employee ID</legend>
+			 				<input type="text" name="employee_id">	
+			 			</fieldset>
+    				  }
+ 			 		
+				</div>
+			</div>
+			<div class="row">
+				<div id="messages">
+					@messageBoard(posts)
+				</div>
+			</div>
+		</div>
+		<div class="span2">
+			<h1>This is the Activity list</h1>
+			@activityContainer(activities)
+		</div>
+
+	</div>
+</div>
+
+}
