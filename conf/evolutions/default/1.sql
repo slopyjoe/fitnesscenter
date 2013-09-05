@@ -28,7 +28,7 @@ create table fitness_schedule (
   constraint pk_fitness_schedule primary key (internal_id))
 ;
 
-create table user (
+create table member (
   email                     varchar(255) not null,
   first_name                varchar(255),
   last_name                 varchar(255),
@@ -37,7 +37,7 @@ create table user (
   last_logged_in            timestamp,
   created_on                timestamp,
   active                    boolean,
-  constraint pk_user primary key (email))
+  constraint pk_member primary key (email))
 ;
 
 create sequence activity_seq;
@@ -46,9 +46,9 @@ create sequence bulletin_post_seq;
 
 create sequence fitness_schedule_seq;
 
-create sequence user_seq;
+create sequence member_seq;
 
-alter table activity add constraint fk_activity_instructor_1 foreign key (instructor_email) references user (email) on delete restrict on update restrict;
+alter table activity add constraint fk_activity_instructor_1 foreign key (instructor_email) references member (email) on delete restrict on update restrict;
 create index ix_activity_instructor_1 on activity (instructor_email);
 alter table fitness_schedule add constraint fk_fitness_schedule_activity_2 foreign key (activity_internal_id) references activity (internal_id) on delete restrict on update restrict;
 create index ix_fitness_schedule_activity_2 on fitness_schedule (activity_internal_id);
@@ -65,7 +65,7 @@ drop table if exists bulletin_post;
 
 drop table if exists fitness_schedule;
 
-drop table if exists user;
+drop table if exists member;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
@@ -75,5 +75,5 @@ drop sequence if exists bulletin_post_seq;
 
 drop sequence if exists fitness_schedule_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists member_seq;
 

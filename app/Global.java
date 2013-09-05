@@ -28,7 +28,7 @@ public class Global extends GlobalSettings {
 						.load("initial-data.yml");
 
 				// Insert users first
-				Ebean.save(all.get("users"));
+				Ebean.save(all.get("Members"));
 				
 				
 
