@@ -11,7 +11,7 @@ import org.codehaus.jackson.node.ObjectNode;
 import models.Activity;
 import models.BulletinPost;
 import models.FitnessSchedule;
-import models.User;
+import models.Member;
 import play.db.ebean.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -34,7 +34,7 @@ public class Dashboard extends Controller{
 		Map<String,String[]> params;
 	    params = request().body().asFormUrlEncoded();
 	    String email = params.get("employee_id")[0];
-	    User user = User.find.where().eq("employee_id", email).findUnique();
+	    Member user = Member.find.where().eq("employee_id", email).findUnique();
 	    List<Activity> activities = Activity.find.all();
 	    List<BulletinPost> posts = BulletinPost.find.all();
 	    

@@ -29,7 +29,7 @@ public class Activity extends Model{
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@Required
-	private User instructor;
+	private Member instructor;
 	
 	private boolean hasSchedule;
 	
@@ -52,10 +52,10 @@ public class Activity extends Model{
 	public void setInternal_id(Long internal_id) {
 		this.internal_id = internal_id;
 	}
-	public User getInstructor() {
+	public Member getInstructor() {
 		return instructor;
 	}
-	public void setInstructor(User instructor) {
+	public void setInstructor(Member instructor) {
 		this.instructor = instructor;
 	}
 	public boolean isHasSchedule() {

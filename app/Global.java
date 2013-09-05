@@ -8,7 +8,7 @@ import com.avaje.ebean.Ebean;
 import models.Activity;
 import models.BulletinPost;
 import models.FitnessSchedule;
-import models.User;
+import models.Member;
 import play.Application;
 import play.GlobalSettings;
 import play.libs.Yaml;
@@ -22,7 +22,7 @@ public class Global extends GlobalSettings {
 	static class InitialData {
 
 		public static void insert(Application app) {
-			if (Ebean.find(User.class).findRowCount() == 0) {
+			if (Ebean.find(Member.class).findRowCount() == 0) {
 
 				Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml
 						.load("initial-data.yml");
@@ -35,8 +35,8 @@ public class Global extends GlobalSettings {
 			}
 			
 			if(Ebean.find(Activity.class).findRowCount() == 0) {
-				User jane = User.find.byId("jane@sample.com");
-				User scooby = User.find.byId("scooby@sample.com");
+				Member jane = Member.find.byId("jane@sample.com");
+				Member scooby = Member.find.byId("scooby@sample.com");
 				if(jane != null && scooby != null){
 					
 					Activity act = new Activity();

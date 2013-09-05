@@ -8,7 +8,7 @@ import static play.test.Helpers.testServer;
 import java.util.Date;
 
 import models.Activity;
-import models.User;
+import models.Member;
 
 import org.junit.Test;
 

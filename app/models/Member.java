@@ -13,7 +13,7 @@ import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 @Entity
-public class User extends Model{
+public class Member extends Model{
 
 	/**
 	 * 
@@ -46,9 +46,9 @@ public class User extends Model{
 	
 	private boolean active;
 	
-	public static Finder<String, User> find = new Finder<String, User>(String.class, User.class);
+	public static Finder<String, Member> find = new Finder<String, Member>(String.class, Member.class);
 	
-	public static String fullName(User user){return user.firstName + " " + user.lastName;}
+	public static String fullName(Member user){return user.firstName + " " + user.lastName;}
 	
 	public String getFirstName() {
 		return firstName;
