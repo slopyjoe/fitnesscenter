@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 
 import models.Activity;
@@ -58,9 +59,15 @@ public class Dashboard extends Controller{
 	}
 	
 	public static Result findUser(String employee_id){
-		
 		ObjectNode result = Json.newObject();
-		System.out.println("Employee ID " + employee_id);
+		Member member = Member.find.where().eq("employee_id", employee_id).findUnique();
+		if(member != null)
+		{
+			JsonNode memberNode = Json.toJson(member);
+			result.put("user", memberNode);
+			System.out.println(member);
+		}
+		
 		result.put("name", Json.toJson("User"));
 		return ok(result);
 	}

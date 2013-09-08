@@ -50,6 +50,7 @@ public class Member extends Model{
 	
 	public static String fullName(Member user){return user.firstName + " " + user.lastName;}
 	
+	
 	public String getFirstName() {
 		return firstName;
 	}

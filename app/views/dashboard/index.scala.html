@@ -12,30 +12,7 @@
 				  
                   @report("_X", available)
             	  
-            	  	<script type="text/javascript">
-            	  	$(function(){
-            	  		$.fn.pressEnter = function() {  
-
-        	  	    		return this.each(function() { 
-        	  	        	$(this).keyup(function(e){
-        	  	            	if(e.keyCode == 13)
-        	  	            	{
-        	  	            		$.get("/report/" + $('#employee_id').val(),function(data){
-        	  	            			alert("Data loaded " + data.name)
-        	  	            		});
-        	  	              		$('#user_report').modal('show')
-        	  	            	}
-        	  	        	})
-        	  	    		});  
-        	  	 		}; 
-        	  		$('#employee_id').pressEnter()
-        	  		});
-            	  	</script>
-            	  		
-			 			<fieldset>
-			 				<legend>Employee ID</legend>
-			 				<input id="employee_id" type="text" name="employee_id">	
-			 			</fieldset>
+            	  	
     				  
  			 		
 				</div>
