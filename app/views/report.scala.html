@@ -1,10 +1,10 @@
-@(message:String, available: Seq[Activity])
+@()
 <div data-ng-controller="UserReportCtrl">
 
 	<form>
 		<fieldset>
 			<legend>Employee ID</legend>
-			<input id="employee_id" data-ng-enter="enter()" type="text" name="employee_id">	
+			<input id="employee_id" data-ng-model="empId" data-ng-enter="enter()" type="text" name="employee_id">	
 		</fieldset>
 	</form>
 			 			
@@ -14,17 +14,18 @@
 		
 		<div class="modal-header">
 			<h3>Welcome {{user.name}}</h3>
-			@available.map { act =>
-				<button type="submit" class="btn" id=@act.getName()">@act.getName()</button>
-			
-			}
 		</div>
 		
 		<div class="modal-body">
-			<p>@message</p>
+			<h4>Please choose an activity</h4>
+			<button class="btn" data-ng-model="activityName" data-ng-repeat="activity in activities" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
+			<br/>
+			<button class="btn" data-ng-model="activityName" data-ng-repeat="activity in classes" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
 		</div>
 		
 		<div class="modal-footer">
+			<p> Total Number of Visits : {{user.totalCount}}</p>
+		
 		</div>
 	</div>
 	

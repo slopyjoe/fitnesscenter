@@ -1,4 +1,4 @@
-@(activities: Seq[Activity] ,user: Member, posts: Seq[BulletinPost], available: Seq[Activity])
+@(activities: Seq[Activity] , posts: Seq[BulletinPost])
 @import helper._;
 
 @main{
@@ -6,15 +6,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span10">
-			<h1>Welcom To the Fitness Center</h1>
+			<h1>Welcome To the Fitness Center</h1>
 			<div class="row" style="height:80%">
 				<div id="login" class="span4 offset5">
-				  
-                  @report("_X", available)
-            	  
-            	  	
-    				  
- 			 		
+                  @report()
 				</div>
 			</div>
 			<div class="row">

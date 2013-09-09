@@ -12,20 +12,36 @@ app.directive('ngEnter', function () {
         });
     };
 });
-app.controller('UserReportCtrl',function($scope){
+app.controller('UserReportCtrl',function($scope, $http){
 	$scope.enter = function() {
-		$http({method: 'GET', url: '/report/' + $('#employee_id').val}).
+		$http({method: 'GET', url: '/report/' + $scope.empId}).
 		  success(function(data, status, headers, config) {
-		    // this callback will be called asynchronously
-		    // when the response is available
-			  alert(data.user.firstName);
+			  $scope.user = data.user;
+			  $scope.activities = data.activities;
+			  $scope.classes = data.classes;
+			  $('#user_report').modal('show');
 		  }).
 		  error(function(data, status, headers, config) {
 		    // called asynchronously if an error occurs
 		    // or server returns response with an error status.
 		  });
 		
-		$('#user_report').modal('show');
+		
+	};
+	
+	$scope.signIn = function(activity) {
+		$http({
+			method: 'POST', 
+			url: '/signIn',
+			data:JSON.stringify({empId:$scope.empId, activityName:activity})
+			}).
+		  success(function(response) {
+			  $('#user_report').modal('hide');
+		  }).
+		  error(function(response) {
+		    // called asynchronously if an error occurs
+		    // or server returns response with an error status.
+		  });
 	};
 });
     
