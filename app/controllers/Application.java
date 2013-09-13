@@ -1,12 +1,9 @@
 package controllers;
 
-import java.util.List;
 import java.util.Map;
 
-import models.Activity;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 
 public class Application extends Controller {
   
@@ -16,8 +13,7 @@ public class Application extends Controller {
 	
 	
     public static Result index() {
-    	List<Activity> activities = Activity.find.all();
-        return ok(index.render(scala.collection.JavaConversions.asScalaBuffer(activities)));
+    	return redirect(routes.Dashboard.index());
     }
   
     public static Result login(){

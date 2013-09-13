@@ -48,7 +48,7 @@ public class Member extends Model{
 	
 	public static Finder<String, Member> find = new Finder<String, Member>(String.class, Member.class);
 	
-	public static String fullName(Member user){return user.firstName + " " + user.lastName;}
+	public String fullName(){return firstName + " " + lastName;}
 	
 	
 	public String getFirstName() {

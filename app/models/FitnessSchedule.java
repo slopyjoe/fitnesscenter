@@ -1,6 +1,9 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,5 +46,19 @@ public class FitnessSchedule extends Model{
 	
 	public static Finder<Long, FitnessSchedule> find = new Finder<Long, FitnessSchedule>(Long.class, FitnessSchedule.class);
 	
+	public static List<Activity> getCurrentActivities(){
+		List<Activity> activities = new ArrayList<Activity>();
+		Calendar cal = Calendar.getInstance();
+		Calendar scheduleTime = Calendar.getInstance();
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		int hour = cal.get(Calendar.HOUR);
+		for(FitnessSchedule schedule : find.all()){
+			scheduleTime.setTime(schedule.time_slot);
+			if(scheduleTime.get(Calendar.DAY_OF_WEEK) == dayOfWeek){
+				activities.add(schedule.activity);
+			}
+		}
+		return activities;
+	}
 	
 }

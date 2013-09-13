@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +40,9 @@ public class Activity extends Model{
 	
 	public static Finder<Long, Activity> find = new Finder<Long, Activity>(Long.class, Activity.class);
 	
-	
+	public static List<Activity> staticClasses(){
+		return find.where().eq("hasSchedule", false).findList();
+	}
 	
 	public String getDescription(){
 		return description;
