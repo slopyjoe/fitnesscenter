@@ -32,6 +32,9 @@ public class Member extends Model{
 	@MaxLength(80)
 	@PrimaryKeyJoinColumn
 	private String email;
+
+    @Required
+    private String organization;
 	
 	private String employee_id;
 	
@@ -115,6 +118,11 @@ public class Member extends Model{
 		this.active = active;
 	}
 	
-	
-	
+	public String getOrganization(){
+        return organization;
+    }
+
+    public void setOrganization(String organization){
+        this.organization = organization;
+    }
 }

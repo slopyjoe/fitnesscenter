@@ -12,16 +12,18 @@ Members:
         lastLoggedIn: 2013-8-26		
         createdOn: 2012-4-11
         active: true
-        
+        organization: ORG
+
     - !!models.Member
         email: frank@sample.com
         firstName: Frank 
         lastName: Bob
-        employee_id: 123452
+        employee_id: 123451
         dob: 1987-4-15
         lastLoggedIn: 2013-8-26		
         createdOn: 2005-4-11
         active: false
+        organization: COM
         
     - !!models.Member
         email: steve@sample.com
@@ -32,7 +34,8 @@ Members:
         lastLoggedIn: 2013-8-10		
         createdOn: 2012-4-11
         active: true
-        
+        organization: ORG
+
     - !!models.Member
         email: jane@sample.com
         firstName: Jane
@@ -42,7 +45,7 @@ Members:
         lastLoggedIn: 2013-7-26		
         createdOn: 2012-4-11
         active: true
-        
+        organization: ORG
         
     - !!models.Member
         email: sam@sample.com
@@ -53,6 +56,7 @@ Members:
         lastLoggedIn: 2012-8-26		
         createdOn: 2012-4-11
         active: true
+        organization: ORG
         
     - !!models.Member
         email: scooby@sample.com
@@ -63,6 +67,7 @@ Members:
         lastLoggedIn: 2013-8-26		
         createdOn: 2012-4-11
         active: false
+        organization: ORG
         
 # Activities
 

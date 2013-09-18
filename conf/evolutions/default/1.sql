@@ -8,6 +8,7 @@ create table activity (
   description               varchar(255),
   instructor_email          varchar(255),
   has_schedule              boolean,
+  default_activity          boolean,
   name                      varchar(255),
   constraint pk_activity primary key (internal_id))
 ;
@@ -32,6 +33,7 @@ create table member (
   email                     varchar(255) not null,
   first_name                varchar(255),
   last_name                 varchar(255),
+  organization              varchar(255),
   employee_id               varchar(255),
   dob                       timestamp,
   last_logged_in            timestamp,

@@ -1,12 +1,10 @@
 package controllers;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
 import models.Activity;
@@ -24,6 +22,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.dashboard.index;
 
+//TODO Update to WebSocket
 public class Dashboard extends Controller{
 
 	/*
@@ -50,15 +49,13 @@ public class Dashboard extends Controller{
     	List<Activity> activities = Activity.find.all();
 	    List<BulletinPost> posts = BulletinPost.find.all();
 	    updateSchedule();
-    	return ok(index.render(scala.collection.JavaConversions.asScalaBuffer(activities),
-        		scala.collection.JavaConversions.asScalaBuffer(posts)));
+    	return ok(index.render());
     }
 	
 	public static Result getMessageBoard(){
 		ObjectNode result = Json.newObject();
 		List<BulletinPost> posts = BulletinPost.find.all();
 		result.put("messages", Json.toJson(posts));
-		System.out.println(result);
 		return ok(result);
 	}
 	
@@ -81,32 +78,40 @@ public class Dashboard extends Controller{
 			total = memberActivity.size();
 			
 		}
-			json.with("user").put("dayCount", day);
-			json.with("user").put("weekCount", week);
-			json.with("user").put("monthCount", month);
-			json.with("user").put("totalCount", total);
+			json.with("counts").put("dayCount", day);
+			json.with("counts").put("weekCount", week);
+			json.with("counts").put("monthCount", month);
+			json.with("counts").put("totalCount", total);
 		
 	}
 	
 	@Transactional
 	public static Result signIn(){
 		JsonNode json = request().body().asJson();
-	    String empId = json.findValue("empId").asText();
-	    String activityName = json.findValue("activityName").asText();
-	    Activity act = Activity.find.where().eq("name", activityName).findUnique();
-	    Member member = Member.find.where().eq("employee_id", empId).findUnique();
-	    MemberCount count = new MemberCount();
-	    count.setMember(member);
-	    count.setActivity(act);
-	    count.setTimestamp(Calendar.getInstance().getTime());
-	    count.save();
+        JsonNode memberNode = json.findValue("user");
+
+        if(memberNode != null)
+        {
+            Member member = Json.fromJson(memberNode,Member.class);
+
+            String activityName = json.findValue("activityName").asText();
+            Activity act = Activity.find.where().eq("name", activityName).findUnique();
+            MemberCount count = new MemberCount();
+            count.setMember(member);
+            count.setActivity(act);
+            count.setTimestamp(Calendar.getInstance().getTime());
+            count.save();
+
+
+        }
 		return ok("Member Signed In");
+    }
 	public static Result enter() {
 		Map<String,String[]> params;
 	    params = request().body().asFormUrlEncoded();
 	    String email = params.get("employee_id")[0];
 	    Member user = Member.find.where().eq("employee_id", email).findUnique();
-	    
+
 	    Calendar currentCal = Calendar.getInstance();
 	    Calendar compareCal = Calendar.getInstance();
 	    List<Activity> available = new ArrayList<Activity>();
@@ -123,24 +128,86 @@ public class Dashboard extends Controller{
 		List<Activity> activities = Activity.find.all();
 	    List<BulletinPost> posts = BulletinPost.find.all();
 
-		return ok(index.render(scala.collection.JavaConversions.asScalaBuffer(activities),user,
-        		scala.collection.JavaConversions.asScalaBuffer(posts),
-        		scala.collection.JavaConversions.asScalaBuffer(available)));
+		return ok(index.render());
 	}
-	
-	public static Result findUser(String employee_id){
-		ObjectNode result = Json.newObject();
-		Member member = Member.find.where().eq("employee_id", employee_id).findUnique();
-		if(member != null)
-		{
-			JsonNode memberNode = Json.toJson(member);
-			result.put("user", memberNode);
-			System.out.println(member);
-		}
-		
-		result.put("name", Json.toJson("User"));
+
+    public static Result createMember(){
+        JsonNode json = request().body().asJson();
+        JsonNode memberNode = json.findValue("user");
+
+        if(memberNode != null)
+        {
+            Member newMember = Json.fromJson(memberNode,Member.class);
+            Date date = Calendar.getInstance().getTime();
+            newMember.setActive(true);
+            newMember.setDob(date);
+            newMember.setLastLoggedIn(date);
+            newMember.save();
+        }
+        return ok("Member saved");
+    };
+
+    /**
+     * Notes : it would be nice to look into FutureList when this
+     * application has more than one instance running.
+     * @return
+     */
+	public static Result findUser(){
+        Map<String,String[]> params;
+
+        params = request().queryString();
+        ObjectNode result = Json.newObject();
+        Map<String, Object> allEq = new HashMap<String, Object>();
+        allEq.put("employee_id", params.get("empId")[0]);
+
+        if(params.containsKey("organization") && ! params.get("organization")[0].equals(""))
+        {
+            allEq.put("organization",params.get("organization")[0]);
+        }
+        List<Member> uniqueMembers = Member.find.where().allEq(allEq).findList();
+
+        boolean found = !uniqueMembers.isEmpty();
+        if(uniqueMembers.size() > 1)
+        {
+            result.with("multipleUsers").put("users", Json.toJson(uniqueMembers));
+        }
+        else if(uniqueMembers.size() > 0)
+        {
+            result = getMemberReport(uniqueMembers.get(0));
+        }
+        result.put("found", found);
+
+
+
+
 		return ok(result);
 	}
-	
-	
+
+
+    @Transactional
+	public static ObjectNode getMemberReport(Member member){
+        ObjectNode result = Json.newObject();
+        result.put("user", Json.toJson(member));
+        result.put("defaultActivity", Json.toJson((Activity.getDefault())));
+        result.put("activities",Json.toJson(Activity.staticClasses()));
+        result.put("classes",Json.toJson(getCurrentActivities()));
+        retrieveMemberCount(member, result);
+        return result;
+    }
+
+    @Transactional
+    public static List<Activity> getCurrentActivities(){
+        List<Activity> available = new ArrayList<Activity>();
+        Calendar currentCal = Calendar.getInstance();
+        Calendar compareCal = Calendar.getInstance();
+
+        for(FitnessSchedule schedule : FitnessSchedule.find.all())
+        {
+            compareCal.setTime(schedule.time_slot);
+            if(compareCal.get(DateFormat.DAY_OF_WEEK_FIELD) == currentCal.get(DateFormat.DAY_OF_WEEK_FIELD)){
+                available.add(schedule.activity);
+            }
+        }
+        return available;
+    }
 }

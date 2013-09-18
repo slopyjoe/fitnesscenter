@@ -1,6 +1,8 @@
 package models;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -34,6 +36,9 @@ public class Activity extends Model{
 	private Member instructor;
 	
 	private boolean hasSchedule;
+
+
+    private boolean defaultActivity;
 	
 	@Required
 	private String name;
@@ -41,8 +46,14 @@ public class Activity extends Model{
 	public static Finder<Long, Activity> find = new Finder<Long, Activity>(Long.class, Activity.class);
 	
 	public static List<Activity> staticClasses(){
-		return find.where().eq("hasSchedule", false).findList();
+        Map<String, Object> allEq = new HashMap<String,Object>();
+        allEq.put("hasSchedule", false);
+        allEq.put("defaultActivity", false);
+		return find.where().allEq(allEq).findList();
 	}
+    public static Activity getDefault(){
+        return find.where().eq("defaultActivity",true).findUnique();
+    }
 	
 	public String getDescription(){
 		return description;
@@ -75,6 +86,11 @@ public class Activity extends Model{
 		this.name = name;
 	}
 	
-	
-	
+	public boolean isDefaultActivity(){
+         return defaultActivity;
+    }
+
+    public void setDefaultActivity(boolean defaultActivity){
+        this.defaultActivity = defaultActivity;
+    }
 }

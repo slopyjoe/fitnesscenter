@@ -1,29 +1,93 @@
-@(message:String, available: Seq[Activity])
+@()
+
 <div data-ng-controller="ModalCtrl">
 
-	<form>
-		<fieldset>
-			<legend>Employee ID</legend>
-			<input id="employee_id" data-ng-model="empId" data-ng-enter="enter()" type="text" name="employee_id">	
-		</fieldset>
-	</form>
-			 			
-    <script type="text/ng-template" id="myModalContent.html">
+
+	<div>
+    <script type="text/ng-template" id="validUser.html">
         <div class="modal-header">
-			<h3>Welcome {{user.name}}</h3>
+			<h3>Welcome {{user.firstName}} {{user.lastName}}</h3>
 		</div>
 
 		<div class="modal-body">
 			<h4>Please choose an activity</h4>
-			<button class="btn" data-ng-model="activityName" data-ng-repeat="activity in activities" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
-			<br/>
-			<button class="btn" data-ng-model="activityName" data-ng-repeat="activity in classes" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
-		</div>
+            <form data-ng-submit="signIn(defaultAct.name)">
+                <button class="btn btn-primary" type="submit" data-ng-click="signIn(defaultAct.name)"> {{defaultAct.name}}</button>
+			    <button class="btn" data-ng-repeat="activity in activities" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
+			    <br/>
+                <br/>
+			    <button class="btn" data-ng-repeat="activity in classes" data-ng-click="signIn(activity.name)">{{activity.name}}</button>
+            </form>
+        </div>
 
 		<div class="modal-footer">
-			<p> Total Number of Visits : {{user.totalCount}}</p>
+			<p> Total Number of Visits : {{counts.totalCount}}</p>
 		</div>
     </script>
 
-	
+    <script type="text/ng-template" id="invalidUser.html">
+        <div class="modal-header">
+            <h3>Hello {{user.firstName}} {{user.lastName}}</h3>
+        </div>
+
+        <div class="modal-body">
+            <form name="newUser">
+                <fieldset>
+                    <legend>Member Information</legend>
+                    <label>First Name:</label>
+                    <input data-ng-model="user.firstName" />
+                    <label>Last Name:</label>
+                    <input data-ng-model="user.lastName"/>
+                    <label>Employee ID:</label>
+                    <input  data-ng-model="user.employee_id"/>
+                    <label>Email:</label>
+                    <input type="email" data-ng-model="user.email"/>
+                    <label>Company:</label>
+                    <input data-ng-model="user.organization"/>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" data-ng-click="ok()">Ok</button>
+            <button class="btn" type="submit" data-ng-click="cancel()">Cancel</button>
+            <br/>
+            <p>Ask a fitness member if additional help is needed.</p>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="multipleUsers.html">
+        <div class="modal-header">
+            <h3>Which company are you associated with?</h3>
+        </div>
+
+        <div class="modal-body">
+            <form>
+                <fieldset>
+                    <label>Organization:</label>
+                    <select ng-model="user"
+                                class="dropdown"
+                                ng-options="user.organization for user in users"
+                                data-ng-required>
+                        <option style="display:none" value="">select a company</option>
+                    </select>
+                    <br/>
+                    <button class="btn btn-primary" type="submit" data-ng-click="ok(user.organization)">Ok</button>
+                    <button class="btn" data-ng-click="cancel()">Cancel</button>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <p>Ask a fitness member if additional help is needed.</p>
+        </div>
+    </script>
+</div>
+
+    <form name='signIn' data-ng-submit="enter()">
+        <fieldset>
+            <legend>Employee ID</legend>
+            <input id="employee_id" data-ng-model="user.employee_id" type="text" name="employee_id">
+        </fieldset>
+    </form>
 </div>

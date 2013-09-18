@@ -1,4 +1,4 @@
-@(activities: Seq[Activity] , posts: Seq[BulletinPost])
+@()
 @import helper._;
 
 @main{
@@ -14,13 +14,13 @@
 			</div>
 			<div class="row">
 				<div id="messages">
-					@messageBoard(posts)
+					@messageBoard()
 				</div>
 			</div>
 		</div>
 		<div class="span2">
 			<h1>This is the Activity list</h1>
-			@activityContainer(activities)
+			@activityContainer()
 		</div>
 
 	</div>

@@ -45,6 +45,7 @@ public class Global extends GlobalSettings {
 					act.setDescription("General Fitness center, weights and cardio");
 					act.setName("Exercise Room");
 					act.setHasSchedule(false);
+                    act.setDefaultActivity(true);
 					act.setInstructor(jane);
 					act.save();
 					
@@ -52,6 +53,7 @@ public class Global extends GlobalSettings {
 					yoga.setDescription("Stretching and core building.");
 					yoga.setName("Yoga");
 					yoga.setHasSchedule(true);
+                    act.setDefaultActivity(false);
 					yoga.setInstructor(jane);
 					yoga.save();
 					
@@ -59,6 +61,7 @@ public class Global extends GlobalSettings {
 					boxing.setDescription("Punching and kicking");
 					boxing.setName("Cardio Boxing");
 					boxing.setHasSchedule(true);
+                    act.setDefaultActivity(false);
 					boxing.setInstructor(scooby);
 					boxing.save();
 					
@@ -66,6 +69,7 @@ public class Global extends GlobalSettings {
 					act.setDescription("Court for basketball");
 					act.setName("BasketBall");
 					act.setHasSchedule(false);
+                    act.setDefaultActivity(false);
 					act.setInstructor(jane);
 					act.save();
 					
@@ -73,6 +77,7 @@ public class Global extends GlobalSettings {
 					act.setDescription("Changing room, lockers, restrooms, and showers");
 					act.setName("Locker Room");
 					act.setHasSchedule(false);
+                    act.setDefaultActivity(false);
 					act.setInstructor(jane);
 					act.save();
 					
